@@ -8,17 +8,13 @@ import com.driver.model.Passenger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
 
 @RestController
 public class AirportController {
 
-    //AirportService airportService = new AirportService();
+//    AirportService airportService = new AirportService();
 
     @Autowired
     AirportService airportService;
@@ -53,9 +49,7 @@ public class AirportController {
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
 
-        double getShortestDuration= airportService. findShortestDuration(fromCity,toCity);
-
-       return getShortestDuration;
+        return airportService. findShortestDuration(fromCity,toCity);
        //return 0;
     }
 

@@ -4,13 +4,17 @@ import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.*;
 
 public class AirportService {
 
-    AirportRepository airportRepository= new AirportRepository();
+//   AirportRepository airportRepository= new AirportRepository();
 
+    @Autowired
+    AirportRepository airportRepository;
     public void addAirport(Airport airport) {
 
         airportRepository.addAirport(airport);
@@ -87,7 +91,8 @@ public class AirportService {
             }
         }
         if(minDurationPossible== Double.MAX_VALUE){
-            return Double.valueOf("-1");
+            //return Double.valueOf("-1");
+            return Double.parseDouble("-1");
         }
         return minDurationPossible;
     }

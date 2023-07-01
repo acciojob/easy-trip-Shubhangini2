@@ -1,13 +1,13 @@
 package com.driver.controllers;
 
 import com.driver.model.Airport;
-import com.driver.model.City;
+
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
-import io.swagger.models.auth.In;
 
-import javax.swing.text.html.Option;
-import java.util.Set;
+
+
+
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +17,8 @@ import java.util.Optional;
 public class AirportRepository {
 
     HashMap<String, Airport> airportData= new HashMap<>();
-    HashMap<Integer, Flight> flightData=new HashMap<>();;
-    HashMap<Integer, Passenger> passengerData=new HashMap<>();;
+    HashMap<Integer, Flight> flightData=new HashMap<>();
+    HashMap<Integer, Passenger> passengerData=new HashMap<>();
 
     HashMap<Integer, ArrayList<Integer>> flightPassengerData= new HashMap<>();
            //flightId //List<passengerId>
