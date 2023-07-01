@@ -4,9 +4,11 @@ import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
+import io.swagger.models.auth.In;
 
+import javax.swing.text.html.Option;
 import java.util.Set;
-
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,71 +16,107 @@ import java.util.Optional;
 
 public class AirportRepository {
 
-    HashMap<String, Airport> airportMap;
-    HashMap<Integer, Flight> flightMap;
-    HashMap<Integer, Passenger> passengerMap;
+    HashMap<String, Airport> airportData= new HashMap<>();
+    HashMap<Integer, Flight> flightData=new HashMap<>();;
+    HashMap<Integer, Passenger> passengerData=new HashMap<>();;
 
-    Set<Integer> bookedPassengers;
+    HashMap<Integer, ArrayList<Integer>> flightPassengerData= new HashMap<>();
+           //flightId //List<passengerId>
 
-    List<Flight>flights;
-
-
-    public AirportRepository() {
-        this.airportMap = new HashMap<String, Airport>();
-        this.flightMap = new HashMap<Integer, Flight>();
-        this.passengerMap = new HashMap<Integer, Passenger>();
-    }
 
     public void addAirport(Airport airport) {
-        airportMap.put(airport.getAirportName(), airport);
+
+        airportData.put(airport.getAirportName(), airport);
     }
 
-    public List<Airport> getAllAirport() {
-        return new ArrayList<>(airportMap.values());
+    public List<Airport> getAllAirports() {
+        return new ArrayList<>(airportData.values());
     }
+
+
 
 
 
 
 
     public void addFlight(Flight flight) {
-        flightMap.put(flight.getFlightId(), flight);
+        flightData.put(flight.getFlightId(), flight);
     }
 
-    public List<Flight> getFlightByFromCityToCity(City fromCity, City toCity) {
-        List<Flight> matchingFLight = new ArrayList<>();
+    public List<Flight> getAllFlights(){
 
-        for (Flight flight : matchingFLight) {
-            if (flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity))
-                matchingFLight.add(flight);
-        }
-        return matchingFLight;
+        return new ArrayList<>(flightData.values());
     }
 
-    public List<Flight> getAllFlight(){
-        return new ArrayList<>(flightMap.values());
-    }
+//    public List<Flight> getFlightByFromCityToCity(City fromCity, City toCity) {
+//        List<Flight> matchingFLight = new ArrayList<>();
+//
+//        for (Flight flight : matchingFLight) {
+//            if (flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity))
+//                matchingFLight.add(flight);
+//        }
+//        return matchingFLight;
+//    }
 
-    public Flight findFlightById(int flightId) {
-     for(Flight flight: flights){
-         if(flight.getFlightId()==flightId){
-             return flight;
+
+
+    public Optional <Flight> getFlightById(Integer flightId) {
+
+         if(flightData.containsKey(flightId)){
+             return Optional.of(flightData.get(flightId));
          }
-     }
-     return null;
+     return Optional.empty();
     }
 
 
 
 
     public void addPassenger(Passenger passenger) {
-        passengerMap.put(passenger.getPassengerId(), passenger);
+        passengerData.put(passenger.getPassengerId(), passenger);
     }
 
 
-    public boolean isPassengerBooked(int passengerId) {
-        return bookedPassengers.contains(passengerId);
+//    public boolean isPassengerBooked(int passengerId) {
+//
+//        return bookedPassengers.contains(passengerId);
+//    }
+
+
+    public Optional <Airport> getAirportByName(String airportName) {
+        if(airportData.containsKey(airportName)){
+            return Optional.of(airportData.get(airportName));
+        }
+        return Optional.empty();
     }
 
+    public ArrayList<Integer> getPassengerForFlight(Integer flightId) {
+        if(flightPassengerData.containsKey(flightId)){
+            return flightPassengerData.get(flightId);
+        }
+        return new ArrayList<>() ;
+    }
 
+    public Optional <Passenger> getPassengerById(Integer passengerId) {
+        if(passengerData.containsKey(passengerId)){
+            return Optional.of(passengerData.get(passengerId));
+        }
+        return Optional.empty();
+    }
+
+    public void bookFlight(Integer flightId, Integer passengerId) {
+
+        ArrayList<Integer> passenger = flightPassengerData.getOrDefault(flightId, new ArrayList<>());
+        passenger.add(passengerId);
+        flightPassengerData.put(flightId, passenger);
+    }
+
+    public void cancelFlight(Integer flightId, Integer passengerId) {
+        ArrayList<Integer> passenger = flightPassengerData.getOrDefault(flightId, new ArrayList<>());
+        passenger.remove(passengerId);
+        flightPassengerData.put(flightId, passenger);
+    }
+
+    public Map<Integer, ArrayList<Integer>> getAllFlightBookings() {
+        return flightPassengerData;
+    }
 }
