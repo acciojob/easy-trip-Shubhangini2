@@ -72,6 +72,7 @@ public class AirportRepository {
 
 
     public void addPassenger(Passenger passenger) {
+
         passengerData.put(passenger.getPassengerId(), passenger);
     }
 
@@ -117,6 +118,7 @@ public class AirportRepository {
     }
 
     public Map<Integer, ArrayList<Integer>> getAllFlightBookings() {
+
         return flightPassengerData;
     }
 }

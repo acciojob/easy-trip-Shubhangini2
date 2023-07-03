@@ -117,6 +117,8 @@ public class AirportService {
         int  totalPassengers =0;
         List<Flight> flights= airportRepository.getAllFlights();
       Optional<Airport> airportOpt = airportRepository.getAirportByName(airportName);
+
+        Map<Integer, ArrayList<Integer>> getAllFlightBookingPassengers = airportRepository.getAllFlightBookings();
       if(airportOpt.isEmpty()){
           throw new RuntimeException("airport not present");
       }
@@ -125,7 +127,8 @@ public class AirportService {
 
       for(Flight flight: flights){
             if(flight.getFlightDate().equals(date) && (flight.getFromCity().equals(city) || flight.getToCity().equals(city))){
-                totalPassengers += flight.getMaxCapacity();
+                //totalPassengers += flight.getMaxCapacity();
+                totalPassengers += getAllFlightBookingPassengers.size();
             }
         }
         return totalPassengers;
@@ -246,7 +249,7 @@ public class AirportService {
     public int getFlightFare(Integer flightId) {
 
         ArrayList<Integer> pass= airportRepository.getPassengerForFlight(flightId);
-        return 3000 * pass.size() * 50;
+        return 3000 + pass.size() * 50;
     }
 
     public int getRevenueForFlight(Integer flightId) {
@@ -254,6 +257,7 @@ public class AirportService {
         ArrayList<Integer> pass= airportRepository.getPassengerForFlight(flightId);
         int n= pass.size();
         //3000 * n + 0+ 50+ 100 //if there are 3 passenger it will got till 100
+
 
         return 3000 * n + 50*(n)*(n-1)/2; //if it is starting from 1 we should do n+1
 
