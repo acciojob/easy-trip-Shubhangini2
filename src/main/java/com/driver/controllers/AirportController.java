@@ -1,7 +1,7 @@
 package com.driver.controllers;
-
-
 import com.driver.model.Airport;
+
+//import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
@@ -14,10 +14,10 @@ import java.util.Date;
 @RestController
 public class AirportController {
 
-//    AirportService airportService = new AirportService();
+    AirportService airportService = new AirportService();
 
-    @Autowired
-    AirportService airportService;
+//    @Autowired
+//    AirportService airportService;
 
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport) {
@@ -49,7 +49,7 @@ public class AirportController {
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
 
-        return airportService. findShortestDuration(fromCity,toCity);
+        return airportService.findShortestDuration(fromCity, toCity);
        //return 0;
     }
 

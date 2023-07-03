@@ -11,10 +11,10 @@ import java.util.*;
 
 public class AirportService {
 
-//   AirportRepository airportRepository= new AirportRepository();
+  AirportRepository airportRepository= new AirportRepository();
 
-    @Autowired
-    AirportRepository airportRepository;
+//    @Autowired
+//    AirportRepository airportRepository;
     public void addAirport(Airport airport) {
 
         airportRepository.addAirport(airport);
